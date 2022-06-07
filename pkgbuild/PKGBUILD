@@ -1,5 +1,5 @@
 pkgname=websnapshot
-pkgver=r0
+pkgver=r2.f763eb8
 pkgrel=1
 pkgdesc="Takes snapshots from webpages"
 arch=('i686' 'x86_64')
@@ -22,13 +22,16 @@ prepare() {
 build() {
   cd $pkgname
   rm -rf bin/ obj/
-  dotnet build -r linux-x64 -c Release --self-contained
+  dotnet publish -c Release -o "$pkgdir/opt/$pkgname"
 }
 
 package() {
   cd $pkgname
   install -d "$pkgdir/opt/$pkgname"
-  dotnet publish --no-build -r linux-x64 -c Release --self-contained -o "$pkgdir/opt/$pkgname"
+    
+  cp -a "$srcdir/publish/." "$pkgdir/opt/$pkgname/"
+  chmod go+x "$pkgdir/opt/$pkgname/.playwright/node/linux/"{node,playwright.sh}
+  chmod go+x "$pkgdir/opt/$pkgname/.playwright/package/bin/"{*.exe,*.sh}
     
   install -d "$pkgdir/usr/bin"
   ln -s "/opt/$pkgname/$pkgname" "$pkgdir/usr/bin/$pkgname"
