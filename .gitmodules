@@ -1,0 +1,3 @@
+[submodule "webgrep"]
+	path = webgrep
+	url = git@raboni.eu:webgrep.git
