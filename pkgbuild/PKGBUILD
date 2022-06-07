@@ -1,5 +1,5 @@
 pkgname=websnapshot
-pkgver=r2.f763eb8
+pkgver=r3.0ae1b99
 pkgrel=1
 pkgdesc="Takes snapshots from webpages"
 arch=('i686' 'x86_64')
@@ -22,7 +22,7 @@ prepare() {
 build() {
   cd $pkgname
   rm -rf bin/ obj/
-  dotnet publish -c Release -o "$pkgdir/opt/$pkgname"
+  dotnet publish -c Release -o "$srcdir/publish"
 }
 
 package() {
