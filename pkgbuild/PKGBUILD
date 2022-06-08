@@ -1,5 +1,5 @@
 pkgname=websnapshot
-pkgver=r3.0ae1b99
+pkgver=r4.20431aa
 pkgrel=1
 pkgdesc="Takes snapshots from webpages"
 arch=('i686' 'x86_64')
