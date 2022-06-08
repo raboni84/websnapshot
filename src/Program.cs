@@ -106,28 +106,23 @@ namespace websnapshot
 
         private static void ParseUriArguments(string[] args, List<Uri> links)
         {
-            using (Stream stdin = Console.OpenStandardInput())
+            if (args.Any(x => x == "-"))
             {
-                if (stdin.CanRead && stdin.CanSeek && stdin.Length > 0)
+                Console.Error.WriteLine($"reading from stdin");
+                string line;
+                while ((line = Console.ReadLine()) != null)
                 {
-                    using (StreamReader sr = new StreamReader(stdin))
+                    if (Uri.IsWellFormedUriString(line, UriKind.Absolute))
                     {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
-                        {
-                            if (Uri.IsWellFormedUriString(line, UriKind.Absolute))
-                            {
-                                links.Add(new Uri(line, UriKind.Absolute));
-                            }
-                        }
+                        links.Add(new Uri(line, UriKind.Absolute));
                     }
                 }
             }
-            foreach (var line in args)
+            foreach (var elem in args)
             {
-                if (Uri.IsWellFormedUriString(line, UriKind.Absolute))
+                if (Uri.IsWellFormedUriString(elem, UriKind.Absolute))
                 {
-                    links.Add(new Uri(line, UriKind.Absolute));
+                    links.Add(new Uri(elem, UriKind.Absolute));
                 }
             }
         }
